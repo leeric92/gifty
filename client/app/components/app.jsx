@@ -6,6 +6,22 @@ var App = React.createClass({
   },
   createLock: function() {
     this.lock = new Auth0Lock(this.props.clientId, this.props.domain);
+
+    this.hash = this.lock.parseHash();
+    if (hash) {
+      if (hash.error) {
+        console.log("There was an error logging in", hash.error);
+      } else {
+        lock.getProfile(hash.id_token, function(err, profile) {
+        if (err) {
+          console.log('Cannot get user :(', err);
+          return;
+        }
+        
+        console.log("Hey dude", profile);
+    });
+  }
+}
   },
   setupAjax: function() {
     $.ajaxSetup({

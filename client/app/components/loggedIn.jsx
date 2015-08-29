@@ -10,6 +10,12 @@ var LoggedIn = React.createClass({
     });
   },
 
+  logout: function() {
+    localStorage.removeItem('userToken');
+    this.props.lock.logout({ ref: 'window.location.href' });
+    // Go to home with your React Router
+  },
+
   getInitialState: function() {
     return {
       profile: null
@@ -34,6 +40,8 @@ var LoggedIn = React.createClass({
           <img src={this.state.profile.picture} />
           <h2>Welcome {this.state.profile.nickname}</h2>
 
+
+          <button onClick={this.logout} className="btn btn-lg btn-primary">Logout</button>
         </div>);
     } else {
       return (
