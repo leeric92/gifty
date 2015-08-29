@@ -4,11 +4,12 @@ var prodAdv = aws.createProdAdvClient('AKIAIT6MPAH4YTKJ46BA', 'TJlF9dNeQS7ZAn4g6
 
 // console.log(">>>>>>>>>>>prodAdv",prodAdv.client.call)
 
- var options = {ItemId: '1118531647', ResponseGroup: 'Offers, ItemAttributes, Images'}
+ // var options = {ItemId: '1118531647', ResponseGroup: 'Offers, ItemAttributes, Images'}
 
-// var options = {SearchIndex: "Books", Keywords: "Javascript"}
+var options = {SearchIndex: "Books", Keywords: "Javascript"}
 
-prodAdv.call("SimilarityLookup", options, function(err, result) {
+// prodAdv.call("SimilarityLookup", options, function(err, result) {
+prodAdv.call("ItemSearch", options, function(err, result) {
   // console.log(">>>>>>>>>>",result.Items.Item[0].ItemLinks);
   // console.log(">>>>>>>>>>",result.Items.Item[0]);
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>",result.Items.Item);
