@@ -12,7 +12,7 @@ var options = {SearchIndex: "Books", Keywords: "Javascript", ResponseGroup: 'Off
 prodAdv.call("ItemSearch", options, function(err, result) {
   // console.log(">>>>>>>>>>",result.Items.Item[0].ItemLinks);
   // console.log(">>>>>>>>>>",result.Items.Item[0]);
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>",result.Items.Item);
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>",result.Items.Item[0].ItemLinks);
 
 
   //get the price 
