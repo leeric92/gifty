@@ -1,6 +1,7 @@
 var aws = require("aws-lib");
+require('dotenv').load();
 
-var prodAdv = aws.createProdAdvClient('AKIAIT6MPAH4YTKJ46BA', 'TJlF9dNeQS7ZAn4g6NwWGqRvbp16xvBEyTNAGrSq', 'eric0e7-20');
+var prodAdv = aws.createProdAdvClient(process.env.AMAZON_CLIENT_ID, process.env.AMAZON_CLIENT_SECRET, process.env.AMAZON_ASSOCIATE_TAG);
 
 // console.log(">>>>>>>>>>>prodAdv",prodAdv.client.call)
 
