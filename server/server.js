@@ -15,7 +15,7 @@ prodAdv.call("ItemSearch", options, function(err, result) {
   // console.log(">>>>>>>>>>",result.Items.Item[0]);
   console.log('#####################################')
   result.Items.Item.forEach(function(item){
-    console.log(item);
+    console.log(JSON.stringify(item, null, '\t'));
   });
   //get the price 
   //console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>",result.Items.Item[0].OfferSummary.LowestNewPrice.FormattedPrice);
