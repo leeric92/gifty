@@ -6,7 +6,7 @@ var LoggedIn = React.createClass({
     var that = this;
 
     $.ajax({
-      url:    'http://localhost:3000/api/friends',
+      url:    'http://localhost:3000/api/friends/',
       method: 'POST',
       data:   {access_token : data}
     }).then(function(jsonFriend) {

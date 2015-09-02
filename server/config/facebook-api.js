@@ -15,7 +15,7 @@ function friends(accessToken) {
 
 function invitableFriends(accessToken) {
     return fbApi('me/invitable_friends', {
-        fields: 'name,picture,birthday',
+        fields: 'name,picture',
         limit: 2000,
         access_token: accessToken
     });

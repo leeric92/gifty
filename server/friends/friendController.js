@@ -2,6 +2,8 @@
 var BPromise = require('bluebird');
 var facebookApi = require('../config/facebook-api.js');
 
+var fs = require("fs");
+
 module.exports = {
   // signin: function(req, res, next) {
   // // look up user in database
@@ -42,10 +44,17 @@ module.exports = {
     BPromise.promisifyAll(facebookApi.invitableFriends(req.body.access_token))
     .then(function(invitableFriendsResponse){
       var invitableFriends = invitableFriendsResponse.data.map(function(userData) {
-          console.log(JSON.stringify(userData,null, '\t'));
+          // fs.appendFile('facebookData/data.txt', 
+          //   JSON.stringify(userData), 
+          //   function (err) {
+          //   if (err) throw err;
+          //     console.log('Saved!');
+          //   });
+
           return {
             id: userData.id,
             name: userData.name,
+            //UNCOMMENT THIS
             pictureUrl: userData.picture.data.url,
           };
       });
