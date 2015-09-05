@@ -12,7 +12,29 @@ var globalActions;
 var FriendManager = React.createClass({
   // const actions = bindActionCreators(userActions, dispatch);
 
+  // deleteFriend: function(id){
+  //   console.log('delete friend call with id', id);
+  //    actions.removeFriend(id);
+  // },
+  getInitialState: function() {
+    return { fbFriends: [], appFriends: [] }
+  },
+
+
+  componentWillUpdate: function(nextProps, nextState){
+    console.log('componentWillUpdate');
+    console.log('CWU nextProps',nextProps);
+    console.log('CWU nextState', nextState);
+  },
+
+  componentDidUpdate: function(nextProps, nextState){
+    console.log('componentDidUpdate');
+    console.log('CDD nextProps',nextProps);
+    console.log('CDD nextState', nextState);
+  },
+
   render: function() {
+    console.log('hi!!!')
     const {friends} = this.props;
     return (
       <div className="friend-manager">
@@ -22,15 +44,10 @@ var FriendManager = React.createClass({
     );
   },
 
-  // deleteFriend: function(id){
-  //   console.log('delete friend call with id', id);
-  //    actions.removeFriend(id);
+
+  // shouldComponentUpdate: function(nextProps, nextState){
+  //   console.log('shouldComponentUpdate');
   // },
-
-  getInitialState: function() {
-    return { fbFriends: [], appFriends: [] }
-
-  },
 
   componentDidMount: function() {
     // this.fetchFacebookFriends();

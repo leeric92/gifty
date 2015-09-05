@@ -13,12 +13,15 @@ export default function userReducer(state=initialState, action) {
     case REMOVE_FRIEND:
       // console.log("REMOVE_FRIEND called")
       console.log(state);
+      return state.filter(function(friend){
+        return friend.id !== action.id;
+      });
       // console.log("action id",action.id)
       // state = state[0];
-      return state.filter(friend =>{
-        console.log('action ID',action.id);
-        friend.id !== action.id
-      });
+      // return state.filter(friend =>{
+      //   console.log('action ID',action.id);
+      //   friend.id !== action.id
+      // });
 
     case FETCH_FRIENDS:
       var friendIds = [];
