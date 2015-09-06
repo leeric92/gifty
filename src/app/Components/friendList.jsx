@@ -6,7 +6,18 @@ import { removeFriend } from '../Actions/user';
 var FriendList = React.createClass({
 
   clickHandler: function(id) {
-    this.props.dispatch(removeFriend(id));
+    $.ajax({
+      url: "http://localhost:" + PORT.PORT + "/api/friends/remove",
+      method: 'POST',
+      data: {friendId: id}, // need to pass in the access token
+      success: function(id) {
+        this.props.dispatch(removeFriend(id));
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error("http://localhost:" + PORT.PORT + "/api/friends", status, err.toString());
+      }.bind(this)
+    });
+
   },
 
   render: function() {

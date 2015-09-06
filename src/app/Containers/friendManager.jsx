@@ -14,7 +14,7 @@ var FriendManager = React.createClass({
     const { friends } = this.props;
     return (
       <div className="friend-manager">
-        <FilterableFriends />
+         <FilterableFriends fbFriends={this.state.fbFriends} />
         <FriendList appFriends={friends}/>
       </div>
     );
@@ -60,7 +60,6 @@ var FriendManager = React.createClass({
       }.bind(this)
     });
   }
-
 });
 
 FriendManager.propTypes = {
