@@ -35,7 +35,7 @@ var GiftRecommendations = React.createClass({
   },
 
   generateRandomKeyword: function(bookArray){
-    var randomIndex = Math.floor(Math.random() * (userArray.length - 1) + 1);
+    // var randomIndex = Math.floor(Math.random() * (bookArray.length - 1) + 1);
     var keyWordArr = []
     bookArray.forEach(function(book){
       var keyWord = book.name;
