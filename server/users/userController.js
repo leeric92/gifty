@@ -16,7 +16,7 @@ module.exports = {
     User.findOne({fbId: req.body.user.user_id})
         .exec(function(err, found) {
           if (found) {
-            res.send(200, 'User already existed!');
+            res.status(200).send('User already existed!');
           } else {
           var newUser = new User({
             fbId: req.body.user.user_id,

@@ -34,10 +34,14 @@ var GiftRecommendations = React.createClass({
     // this.generateRandomKeyword(this.props.friend[0].books.data)
   },
 
-  generateRandomKeyword: function(userArray){
+  generateRandomKeyword: function(bookArray){
     var randomIndex = Math.floor(Math.random() * (userArray.length - 1) + 1);
-    var keyWord = userArray[randomIndex].name;
-    this.fetchGiftByKeyWord(keyWord);
+    var keyWordArr = []
+    bookArray.forEach(function(book){
+      var keyWord = book.name;
+      keyWordArr.push(keyWord);
+    });
+    this.fetchGiftByKeyWord(keyWordArr);
   },
 
   fetchFriendById: function(friendId) {
@@ -74,11 +78,11 @@ var GiftRecommendations = React.createClass({
     });
   },
 
-  fetchGiftByKeyWord: function(keyword) {
+  fetchGiftByKeyWord: function(keywordArr) {
     $.ajax({
       url: "http://localhost:" + PORT.PORT + "/api/gifts/searchbykeyword",
       method: 'POST',
-      data: {keyword : keyword}, // need to pass in the access token
+      data: {keywordArr : keywordArr}, // need to pass in the access token
       success: function(gift) {
         this.getSimilarItem(gift.Items.Item[0]);
       }.bind(this),
