@@ -6,6 +6,9 @@ import FriendList from '../Components/friendList';
 import PORT from '../../config/port.js';
 
 var FriendManager = React.createClass({
+  setInitialState: function(){
+    return {profile : 'bob'}
+  },
 
   render: function() {
     const { friends } = this.props;

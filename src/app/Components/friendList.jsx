@@ -1,4 +1,4 @@
-// TODO: Get user's first name from facebook for userheader 
+// TODO: Get user's first name from facebook for userheader
 
 import React from 'react';
 import { connect } from 'react-redux';

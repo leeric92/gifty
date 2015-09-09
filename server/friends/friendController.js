@@ -48,7 +48,7 @@ module.exports = {
           return {
             id: friend.id,
             name: friend.name,
-            pictureUrl: friend.picture.data.url,
+            pictureUrl: friend.picture.data.url
           };
       });
       res.send(JSON.stringify(invitableFriends));
@@ -57,6 +57,23 @@ module.exports = {
         console.log('Error building invitableFriends response');
         next(err);
     });
+  },
+
+  saveGift: function(req, res, next){
+    var friendId = req.body.friendId;
+    var userId = req.body.userId;
+    var ASIN = req.body.ASIN;
+
+    User.findOne({fbId:userId})
+    .exec(function(err, user) {
+          if (user) {
+            console.log('User Found!')
+          } else {
+            console.log('User Not Found!')
+          }
+    });
+
+
   },
 
   getFriendById: function(req, res, next) {

@@ -1,4 +1,7 @@
 var User = require('./userModel.js');
+var GiftSchema = require('../gifts/giftModel')
+var mongoose = require('mongoose');
+var Gift = mongoose.model('Gift', GiftSchema);
 
 module.exports = {
 
@@ -13,26 +16,42 @@ module.exports = {
   // },
 
   saveUser: function(req, res, next) {
+    // res.send(200, 'hi')
     User.findOne({fbId: req.body.user.user_id})
         .exec(function(err, found) {
           if (found) {
             res.send(200, 'User already existed!');
           } else {
-          var newUser = new User({
-            fbId: req.body.user.user_id,
-            birthdate : req.body.user.birthday,
-            mutual_friends : req.body.user.mutual_friends
-          });
+            var newUser = new User({
+              fbId: req.body.user.user_id,
+              birthdate : req.body.user.birthday,
+              mutual_friends : req.body.user.mutual_friends,
+              giftList: []
+            });
+            req.body.user.mutual_friends.forEach(function(friend){
+              var newGift = new Gift({fbId: friend.id,
+                                      pinnedGifts:
+                                        [
+                                          { books : [],
+                                            music : [],
+                                            etsy: []
+                                           }
+                                        ]
+                                    });
+              newUser.giftList.push(newGift);
+            });
 
           newUser.save(function(err,savedUser) {
             if (err) {
               res.send(500, 'Error saving user to DB' + err);
             } else {
               console.log(">> new User",savedUser);
-              res.send(200,newUser);
+              res.send(200, newUser)
             }
-        });
-      }
-    });
-  }
+          });
+
+      // }
+}
+});
+}
 }

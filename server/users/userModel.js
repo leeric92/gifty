@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
+var GiftSchema = require('../gifts/giftModel');
 
 // represents all users of the app, both gifters and giftees
 var UserSchema = new mongoose.Schema({
+   _id: {type: String},
   birthdate: {
     // http://stackoverflow.com/questions/18128532/how-to-correctly-jsonify-a-mongoose-model-with-a-birthday
     // FACEBOOK GRAPH API: The person's birthday. This is a fixed format string, like MM/DD/YYYY. However, people can control who can see the year they were born separately from the month and day so this string can be only the year (YYYY) or the month + day (MM/DD)
@@ -17,22 +19,7 @@ var UserSchema = new mongoose.Schema({
   mutual_friends:{
     type: mongoose.Schema.Types.Mixed
   },
-  giftsList: [{ // array that represents users, stored by _id that reference the target user
-    fbId: {
-      type: String,
-      pinnedGifts: [{
-              books: [{
-                        type: mongoose.Schema.Types.Mixed
-                      }],
-              music: [{
-                        type: mongoose.Schema.Types.Mixed
-                      }],
-              etsy: [{
-                        type: mongoose.Schema.Types.Mixed
-                      }]
-          }]
-    }
-  }]
+  giftList: [GiftSchema]
 });
 
 module.exports = mongoose.model('User', UserSchema);
