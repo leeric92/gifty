@@ -155,7 +155,7 @@ module.exports = {
                 + req.body.endDate
                 + '&location='
                 + req.body.loc
-                + '&radius=150&app_id=Gyftee';
+                + '&radius=10&app_id=Gyftee';
       var requestOptions = {
         url: url,
         json: true
@@ -170,7 +170,7 @@ module.exports = {
       })
     };
     var artistArr = req.body.artistArr;
-    if(artistArr){
+    // if(artistArr){
       artistArr.forEach(function(artist){
         artist = artist.split(" ").join("+");
         promises.push(eventAsync(artist));
@@ -191,9 +191,9 @@ module.exports = {
         // console.log(JSON.stringify(result, null, '\t'));
         res.send(200,result);
       });
-    }else{
-      res.send(200,null);
-    }
+    // }else{
+    //   res.send(200,null);
+    // }
 
  },
 
@@ -208,160 +208,85 @@ module.exports = {
     });
   },
 
-//   getTagsFromMetamindDraft: function(req, res, next){
-
-//     var imageArr = req.body.imageArr;
-//     imageArr = imageArr[0].slice(0,3);
-//     // console.log(imageArr);
-
-
-//     var promises = [];
-
-//     var imageClassifyAsync = function(image){
-//       var post_data = JSON.stringify({'classifier_id':'imagenet-1k-net','image_url':image});
-
-//     // // var imageURL = req.body.imageURL;
-//       var API_KEY = 'Basic ' + process.env.METAMIND_API_KEY;
-//       var https_options = url.parse('https://www.metamind.io/vision/classify');
-//       https_options.method = 'POST';
-//       https_options.headers = {
-//               "Authorization": "Basic aXZxkB3eOMupDZSMNIZSdfD9hxv2zBDpen8qbMOOPLtzYwhx2X",
-//               'Content-Type': 'application/json',
-//               'Content-Length': post_data.length
-//       }
-//       return new Promise(function(resolve, reject){
-//         // var post_request = https.request(https_options, function(response, err) {
-//         // if(err !== null){
-//         //     return reject(err);
-//         // }
-//         // // resolve(response)
-//         // response.setEncoding('utf8');
-//         //   response.on('data', function (chunk) {
-//         //     console.log(chunk)
-
-//         // //     // resolve(response);
-//         // //     // response.setEncoding('utf8');
-//         // //     // response.on('data', function (chunk) {
-//         // //     //     resolve(chunk);
-//         // //     // })
-//         // });
-//         // resolve(response)
-
-//         var options = {
-//           method: 'POST',
-//           uri: 'https://www.metamind.io/vision/classify',
-//           image_url: image,
-//           classifier_id: 'imagenet-1k-net',
-//           headers: {
-//               "Authorization": "Basic aXZxkB3eOMupDZSMNIZSdfD9hxv2zBDpen8qbMOOPLtzYwhx2X",
-//               'Content-Type': 'application/json',
-//               'Content-Length': post_data.length
-//           }
-//         }
-
-//         request(options).on('response', function(error, response, body) {
-//           // if(error !== null){
-//           //     return reject(error);
-//           // }
-//           // resolve(body);
-//           console.log(error)
-//         });
-//       // post_request.write(post_data);
-//       // post_request.end();
-//   });
-// };
-
-//     // if(imageArr){
-//       imageArr.forEach(function(image){
-//         console.log(image.source);
-//         promises.push(imageClassifyAsync(image.source));
-//       });
-
-
-//       Promise.all(promises).then(function(result){
-//         console.dir(result);
-//         result = result.map(function(item){
-//           return item;
-//         });
-//         console.log(result)
-//         // console.log(JSON.stringify(result, null, '\t'));
-//         // res.send(200,result);
-//       });
-//     // }else{
-//     //   res.send(200,null);
-//     // }
-
-
-
-//     // var options = {
-//     //   uri: 'https://www.metamind.io/vision/classify',
-//     //   image_url: imageURL,
-//     //   classifier_id: 'imagenet-1k-net',
-//     //   headers: {
-//     //     'Authorization': API_KEY,
-//     //   }
-//     // }
-//     // var result;
-//     // request(options).on('response', function(response) {
-//     //     console.log(response.body);
-//     // });
-//   },
-
   getTagsFromMetamind: function(req, res, next){
 
   // req.body.imageArr[0][9].source
 
-  var imageArr = req.body.imageArr.slice(0)[0][0];
-  var promises = [];
-  var imageClassifyAsync = function(image){
-    var post_data = JSON.stringify({'classifier_id':'imagenet-1k-net','image_url':image});
-    var API_KEY = 'Basic ' + process.env.METAMIND_API_KEY;
-    var https_options = url.parse('https://www.metamind.io/vision/classify');
-    https_options.method = 'POST';
-    https_options.headers = {
-            "Authorization": "Basic aXZxkB3eOMupDZSMNIZSdfD9hxv2zBDpen8qbMOOPLtzYwhx2X",
-            'Content-Type': 'application/json',
-            'Content-Length': post_data.length
+  var imageArr = req.body.imageArr;
+  var flattened = imageArr.reduce(function(a, b) {
+            return a.concat(b);
+  }, []);
+
+  flattened = flattened.reduce(function(a, b) {
+            return a.concat(b);
+  }, [])
+
+  var lastPromise = Promise.resolve();
+
+  var apiKey = process.env.METAMIND_KEY
+    var options = {
+      method: 'POST',
+      headers: {
+        Authorization: 'Basic ' + apiKey
+      },
+      json: {
+        classifier_id: 155,
+        value: post.message
+      }
     }
 
-  return new Promise(function(resolve, reject){
-    post_request = https.request(https_options, function(response, err) {
-            if(!err){
-              return reject(err);
-            }
-    response.setEncoding('utf8');
-    var word = response.on('data', function (chunk) {
-          resolve(chunk);
-                // var classify = JSON.parse(chunk);
-                // var classid = classify.predictions[0].class_name;
-                // callback(null, classid);
-    });
-    });
-  });
-};
 
-      // imageArr.forEach(function(imageAlbum){
-      //   imageAlbum.forEach(function(image){
-      //     promises.push(imageClassifyAsync(image.source));
-      //   })
-      // });
-      // imageArr.forEach(function(image){
-      //     console.log(image.source + '\n')
-      //     promises.push(imageClassifyAsync(image.source));
-      // });
-      console.log(imageArr.source)
-      promises.push(imageClassifyAsync(imageArr.source));
+  // var imageArr = req.body.imageArr.slice(0)[0][0];
+  // var promises = [];
+  // var imageClassifyAsync = function(image){
+  //   var post_data = JSON.stringify({'classifier_id':'imagenet-1k-net','image_url':image});
+  //   var API_KEY = 'Basic ' + process.env.METAMIND_API_KEY;
+  //   var https_options = url.parse('https://www.metamind.io/vision/classify');
+  //   https_options.method = 'POST';
+  //   https_options.headers = {
+  //           "Authorization": "Basic aXZxkB3eOMupDZSMNIZSdfD9hxv2zBDpen8qbMOOPLtzYwhx2X",
+  //           'Content-Type': 'application/json',
+  //           'Content-Length': post_data.length
+  //   }
 
-      Promise.all(promises).then(function(result){
-        // console.dir(result);
-        result = result.map(function(item){
-          return item;
-        });
+  // return new Promise(function(resolve, reject){
+  //   post_request = https.request(https_options, function(response, err) {
+  //           if(!err){
+  //             return reject(err);
+  //           }
+  //   response.setEncoding('utf8');
+  //   var word = response.on('data', function (chunk) {
+  //         resolve(chunk);
+  //               // var classify = JSON.parse(chunk);
+  //               // var classid = classify.predictions[0].class_name;
+  //               // callback(null, classid);
+  //   });
+  //   });
+//   // });
+// },
 
-        console.log('>>>>>>>>>>>', result)
-        // console.log(JSON.stringify(result, null, '\t'));
-        // res.send(200, result);
-      });
+//       // imageArr.forEach(function(imageAlbum){
+//       //   imageAlbum.forEach(function(image){
+//       //     promises.push(imageClassifyAsync(image.source));
+//       //   })
+//       // });
+//       // imageArr.forEach(function(image){
+//       //     console.log(image.source + '\n')
+//       //     promises.push(imageClassifyAsync(image.source));
+//       // });
+//       console.log(imageArr.source)
+//       promises.push(imageClassifyAsync(imageArr.source));
+
+//       Promise.all(promises).then(function(result){
+//         // console.dir(result);
+//         result = result.map(function(item){
+//           return item;
+//         });
+
+//         console.log('>>>>>>>>>>>', result)
+//         // console.log(JSON.stringify(result, null, '\t'));
+//         // res.send(200, result);
+//       });
 
 
 

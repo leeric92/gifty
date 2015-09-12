@@ -104,7 +104,6 @@ var ImageClassify = React.createClass({
   },
 
   getTags: function(imageArr){
-    var image = imageArr[0][0].source
     $.ajax({
       url: 'http://localhost:' + PORT.PORT + '/api/gifts/gettagsfrommetamind/',
       method: 'POST',
